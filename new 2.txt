@@ -1,0 +1,19 @@
+help people learn the alma mater
+	"C:\Users\User\Documents\School\Mobile Apps\Code\Cordova"
+	
+	
+	lryics 
+	singer
+	both
+	Sheet Musin (optional as of now)
+	
+	
+	platforms
+		IOS
+			Prefered
+		Andriod
+			next
+		Web
+			not metioned
+	
+	
