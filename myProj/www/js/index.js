@@ -49,5 +49,8 @@ var app = {
     }
     
 };
+function mainButtonClick(){
+    alert('hello world');
+}
 
 app.initialize();
