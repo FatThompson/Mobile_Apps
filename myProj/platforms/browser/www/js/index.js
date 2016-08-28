@@ -49,5 +49,13 @@ var app = {
     }
     
 };
+function mainButtonClick(){
+    console.log("mainButton Clicked.");
+    //document.getElementById("paragraph").innerText ="Appended Paragraph";
+    navigator.notification.alert("Alert with exit");
+}
+
+
+
 
 app.initialize();

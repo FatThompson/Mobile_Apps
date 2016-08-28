@@ -9,6 +9,12 @@
     "installed_plugins": {
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "edu.ggc.mthompson.fproj"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "edu.ggc.mthompson.fproj"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "edu.ggc.mthompson.fproj"
         }
     },
     "dependent_plugins": {}

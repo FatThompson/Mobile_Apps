@@ -1,0 +1,42 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "lynda.help"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "lynda.help"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "lynda.help"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "lynda.help"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "lynda.help"
+        },
+        "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "lynda.help"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "lynda.help"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "lynda.help"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "lynda.help"
+        },
+        "phonegap-plugin-barcodescanner": {
+            "PACKAGE_NAME": "lynda.help"
+        }
+    },
+    "dependent_plugins": {}
+}
