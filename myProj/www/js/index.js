@@ -34,6 +34,14 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
+        //This is the button handler for the main button
+        document.getElementById("mainButton").addEventListener(
+            "click",
+            function(){
+                console.log("mainButton Clicked.");
+                navigator.notification.alert("Alert with exit.",function(){console.log("Alert Dismissed.")},"Title Test","Button NAme");
+            }
+            , false);
     },
 
     // Update DOM on a Received Event
@@ -49,11 +57,6 @@ var app = {
     }
     
 };
-function mainButtonClick(){
-    console.log("mainButton Clicked.");
-    //document.getElementById("paragraph").innerText ="Appended Paragraph";
-    navigator.notification.alert("Alert with exit");
-}
 
 
 
