@@ -1,5 +1,20 @@
 body{
     text-align: center;
+    margin: 30px;
+    
+}
+table{
+    align-content: center;
+}
+p{
+    max-width: 500px;
+}
+
+ol{
+    text-decoration: true;
+    align-content: center;
+    text-align: left;
+    max-width: 500px;
 }
 #assignment2_video{    
     width: 320;
