@@ -37,8 +37,8 @@ var app = {
         //This is the button handler for the main button
         document.getElementById("mainButton").addEventListener("click", function(){
             console.log("mainButton Clicked.");
-            navigator.notification.alert("Alert with exit.",function(){
-                console.log("Alert Dismissed.")},"Alert Title","Button Name");
+            navigator.notification.alert("Alert Description. Matthew Thompson ITEC 4550",function(){
+                console.log("Alert Dismissed.")},"Alert Title","Alert Dismissal");
             }
             , false);
         },
