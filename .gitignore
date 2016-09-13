@@ -1,3 +1,5 @@
  myProj/platforms/android/*
  myProj/platforms/browser/*
  myProj/platforms/iOS/*
+
+cordova/AlmaMater/platforms/*
