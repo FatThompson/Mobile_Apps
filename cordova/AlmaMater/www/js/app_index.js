@@ -49,7 +49,7 @@ function onDeviceReady() {
     //a file name and it will look in the apps fol
     localFile = fileName;
   }
-  console.log("Local file: " + localFile);
+  // console.log("Local file: " + localFile);
   // remoteFile = remoteHost + fileName;
   // console.log("Remote file: " + remoteFile);
 
@@ -62,19 +62,19 @@ function onDeviceReady() {
 
 function initMediaObject(locOption) {
   var theFile;
-  console.log("Entering initMediaObject");
+  // console.log("Entering initMediaObject");
 
   //If we have a timer active, then we're playing something,
   //better kill it before we do anything else
   if (theTimer) {
-    console.log("Something's already playing");
+    // console.log("Something's already playing");
     //Kill the current play
     doStop();
   }
 
   //Do we have an existing media object?
   if (theMedia) {
-    console.log("Removing existing media object");
+    // console.log("Removing existing media object");
     //then release the OS resources being used by it
     theMedia.release();
     //Then kill it
@@ -92,13 +92,13 @@ function initMediaObject(locOption) {
   
   //set the file to the local file
   theFile = localFile;
-  console.log('Using: ' + theFile);
+  // console.log('Using: ' + theFile);
 
   //Create the media object we need to do everything we need here
-  console.log("Creating media object");
-  console.log("theFile");
+  // console.log("Creating media object");
+  // console.log("theFile");
   theMedia = new Media(theFile, mediaSuccess, mediaError, mediaStatus);
-  console.log("Media: " + JSON.stringify(theMedia));
+  // console.log("Media: " + JSON.stringify(theMedia));
 
   //Write the file name to the page
   $('#fileName').html(theFile);
@@ -112,12 +112,12 @@ function initMediaObject(locOption) {
   //of the page after play begins
   firstRun = true;
 
-  console.log("Leaving initMediaObject");
+  // console.log("Leaving initMediaObject");
 }
 
 function mediaSuccess() {
   //Executed when the media file is finished playing
-  console.log("Entering mediaSuccess");
+  // console.log("Entering mediaSuccess");
   //Kill the timer we were using to update the page
   killTimer();
   //Write the current position to the page
@@ -126,7 +126,7 @@ function mediaSuccess() {
   //Clear out the progress bar
   // $('#progress-bar').val(0);
   // $('#progress-bar').slider('refresh');
-  console.log("Leaving mediaSuccess");
+  // console.log("Leaving mediaSuccess");
 }
 
 function mediaError(errObj) {
@@ -149,7 +149,7 @@ function mediaError(errObj) {
 }
 
 function mediaStatus(statusCode) {
-  console.log("Entering mediaStatus");
+  // console.log("Entering mediaStatus");
   var theStatus;
   switch (statusCode) {
     case Media.MEDIA_NONE:
@@ -172,11 +172,11 @@ function mediaStatus(statusCode) {
   }
   console.log("Status: " + statusCode + " " + theStatus);
   $('#statRes').html(theStatus);
-  console.log("Leaving mediaStatus");
+  // console.log("Leaving mediaStatus");
 }
 
 function doPlay() {
-  console.log("Entering doPlay");
+  // console.log("Entering doPlay");
   if (!theTimer) {
     //Start the media file playing
     theMedia.play();
@@ -187,11 +187,11 @@ function doPlay() {
     console.log("Already playing");
     navigator.notification.alert("Media file already playing", null, alertTitle, alertBtn);
   }
-  console.log("Leaving doPlay");
+  // console.log("Leaving doPlay");
 }
 
 function doPause() {
-  console.log("Entering doPause");
+  // console.log("Entering doPause");
   if (theTimer) {
     //Kill the timer we were using to update the page
     killTimer();
@@ -203,11 +203,11 @@ function doPause() {
     console.log("nothing playing");
     navigator.notification.alert("No media file playing", null, alertTitle, alertBtn);
   }
-  console.log("Leaving doPause");
+  // console.log("Leaving doPause");
 }
 
 function doStop() {
-  console.log("Entering doStop");
+  // console.log("Entering doStop");
   if (theTimer) {
     //Kill the timer we have running
     killTimer();
@@ -219,19 +219,19 @@ function doStop() {
     console.log("Media object is null");
     navigator.notification.alert("Can't stop, no media file playing", null, alertTitle, alertBtn);
   }
-  console.log("Leaving doStop");
+  // console.log("Leaving doStop");
 }
 
-function doSeek() {
-  console.log("Entering doSeek");
-  //We're getting seconds from the form, need to multiply by
-  //1000 to convert to the milliseconds that seekTo requires
-  var seekVal = $('#seekInp').val() * 1000;
-  console.log("Seeking to " + seekVal + secondsStr);
-  //Seek to that position
-  theMedia.seekTo(seekVal);
-  console.log("Leaving doSeek");
-}
+// function doSeek() {
+//   console.log("Entering doSeek");
+//   //We're getting seconds from the form, need to multiply by
+//   //1000 to convert to the milliseconds that seekTo requires
+//   var seekVal = $('#seekInp').val() * 1000;
+//   console.log("Seeking to " + seekVal + secondsStr);
+//   //Seek to that position
+//   theMedia.seekTo(seekVal);
+//   // console.log("Leaving doSeek");
+// }
 
 function setMuteStatus(muteStatus) {
   if (muteStatus) {
@@ -242,7 +242,7 @@ function setMuteStatus(muteStatus) {
 }
 
 function killTimer() {
-  console.log("Entering killTimer");
+  // console.log("Entering killTimer");
   if (theTimer) {
     //Kill the timer that was being used to update the page
     window.clearInterval(theTimer);
@@ -251,23 +251,23 @@ function killTimer() {
   } else {
     console.error('Nothing to do, no timer active');
   }
-  console.log("Leaving killTimer");
+  // console.log("Leaving killTimer");
 }
 
 function updateUI() {
   //The timer has fired, so it's time to update the page
-  console.log("Entering updateUI");
+  // console.log("Entering updateUI");
   //Figure out where we are in the file, result will be available
   //in the callback function, that's where the page gets updated
   theMedia.getCurrentPosition(getPositionSuccess, mediaError);
-  console.log("Leaving updateUI");
+  // console.log("Leaving updateUI");
 }
 
 function getPositionSuccess(filePos) {
 
   var thePos;
 
-  console.log("Entering getPositionSuccess");
+  // console.log("Entering getPositionSuccess");
   console.log("Position: " + filePos);
   if (filePos > 0) {
     //figure out how long the file is
@@ -302,7 +302,7 @@ function getPositionSuccess(filePos) {
         thePos = 100;
       }
       //Update the progress bar
-      console.log('Position: ' + thePos + '%');
+      // console.log('Position: ' + thePos + '%');
       $('#progress-bar').val(thePos);
     } else {
       //otherwise, we don't know how long the file is
@@ -313,5 +313,5 @@ function getPositionSuccess(filePos) {
     $('#progress-bar').val(0);
   }
   $('#progress-bar').slider('refresh');
-  console.log("Leaving getPositionSuccess");
+  // console.log("Leaving getPositionSuccess");
 }
