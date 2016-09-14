@@ -322,18 +322,14 @@ function getPositionSuccess(filePos) {
 }
 
 function changeLyrics(time){
-  //2d array with time then lryc
-  //for loop through (x,1) then display
-  //  through the span on index.html
-
   //enventually grab lryics from a json, but hard code for now.
-  var time_lryic = ["setA","setB", "setC","setA","setB", "setC","setA","setB", "setC"];
+  var time_lryic = ["","setA","setB", "setC","setA","setB", "setC","setA","setB", "setC"];
 
-      
-  var x = 0;
-  var t = Math.floor(time/10); //to help change to its own val
+  var t = Math.floor(time/time_lryic.length); //to help change to its own val
   // //find spot in array
-  if(t<9)
- $('#lyrics').html(time_lryic[t]); 
+  if(time < time_lryic.length){
+    //edit page info
+    $('#lyrics').html(time_lryic[t]); 
+  }
 
 }
