@@ -269,6 +269,8 @@ function getPositionSuccess(filePos) {
 
   // console.log("Entering getPositionSuccess");
   console.log("Position: " + filePos);
+  // update lryics
+  
   if (filePos > 0) {
     //figure out how long the file is
     var theDur = theMedia.getDuration();
@@ -291,6 +293,9 @@ function getPositionSuccess(filePos) {
 
       //Write the current position to the page
       $('#filePos').html(Math.floor(filePos) + secondsStr);
+      //change the lryics
+      changeLyrics(filePos);
+
 
       //Just in case filePos ever goes beyond file length
       //It shouldn't, but who knows...
@@ -314,4 +319,21 @@ function getPositionSuccess(filePos) {
   }
   $('#progress-bar').slider('refresh');
   // console.log("Leaving getPositionSuccess");
+}
+
+function changeLyrics(time){
+  //2d array with time then lryc
+  //for loop through (x,1) then display
+  //  through the span on index.html
+
+  //enventually grab lryics from a json, but hard code for now.
+  var time_lryic = ["setA","setB", "setC","setA","setB", "setC","setA","setB", "setC"];
+
+      
+  var x = 0;
+  var t = Math.floor(time/10); //to help change to its own val
+  // //find spot in array
+  if(t<9)
+ $('#lyrics').html(time_lryic[t]); 
+
 }
