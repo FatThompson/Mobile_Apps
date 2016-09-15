@@ -1,0 +1,13 @@
+.centered {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* Borrowed from http://monocaffe.blogspot.com/2013/05/a-jquery-mobile-progress-bar.html */
+.progress-bar input[type=number], .ui-slider-handle {
+    display: none;
+}
+.progress-bar .ui-slider-track {
+    margin: 0px;
+}
