@@ -34,7 +34,7 @@ function onBodyLoad() {
 function onDeviceReady() {
   console.log("Entering onDeviceReady");
   //Let the user know that the deviceReady event has fired
-  navigator.notification.alert("Cordova is ready", null, alertTitle, alertBtn);
+  navigator.notification.alert("Matthew Thompson ITEC 4550", null, alertTitle, alertBtn);
 
   //Build the local file path the application will use to access the
   if (device.platform == "Android") {
@@ -215,6 +215,7 @@ function doStop() {
     theMedia.stop();
     //Write the current position to the page
     $('#filePos').html('Stopped');
+    $('#lyrics').html('');
   } else {
     console.log("Media object is null");
     navigator.notification.alert("Can't stop, no media file playing", null, alertTitle, alertBtn);
@@ -323,77 +324,31 @@ function getPositionSuccess(filePos) {
 }
 
 function changeLyrics(filePos){
-  //enventually grab lryics from a json, but hard code for now.
-//   var time_lryic = ["" ,"" ,"We have gained wisdom and honor"
-//       ,"From our home of green and grey" 
-//       ,"We will go forth and remember"
-//       ,"All we've learned along the wayyyyyyyyy"
-//       ,"And with knowledge and compassion" 
-//       ,"We will build communities" 
-//       ,"Leading by example" 
-//       ,"And with dignity" 
-//       ,"Georgia Gwinnett" 
-//       ,"We will never forget" 
-//       ,"How we have grown" 
-//       ,"And those that we have met" 
-//       ,"Georgia Gwinnett"
-//       ,"With love and respect"
-//       ,"Alma Mater" 
-//       ,"Georgia Gwinnett" 
-//       ,"Alma Mater" 
-//       ,"Georgia Gwinnett" ,"" ,""];
-//  var t = Math.floor(time/5); //to help change to its own val
-//   // //find spot in array
-//   if(t < time_lryic.length){
-//     //edit page info
-//     $('#lyrics').html(time_lryic[t]); 
-//     //$('#lryics').html(lyrics.exec({time: t}, lyrics));
-//   }
-
-
-  //lyrics for json
-  // var lyrics = [
-  //   {time: 14, lyric:"We have gained wisdom and honor"},
-  //   {time: 18, lyric:"From our home of green and grey"},
-  //   {time: 22, lyric:"All we've learned along the way"},
-  //   {time: 26, lyric:"And with knowledge and compassion"},
-  //   {time: 30, lyric:"We will build communities"},
-  //   {time: 34, lyric:"Leading by example"},
-  //   {time: 39, lyric:"And with dignity"},
-  //   {time: 43, lyric:"Georgia Gwinnett"},
-  //   {time: 47, lyric:"We will never forget"},
-  //   {time: 51, lyric:"How we have grown"},
-  //   {time: 54, lyric:"And those that we have met"},
-  //   {time: 59, lyric:"Georgia Gwinnett"},
-  //   {time: 63, lyric:"With love and respect"},
-  //   {time: 68, lyric:"Alma Mater"},
-  //   {time: 72, lyric:"Georgia Gwinnett"},
-  //   {time: 76, lyric:"Alma Mater"},
-  //   {time: 80, lyric:"Georgia Gwinnett"},
-  // ];
-
-//lyric 2d array
+ // list of the 2d array
    var lyrics_array = [
-    [14, "We have gained wisdom and honor"],
-    [18, "From our home of green and grey"],
+    [01, ""],
+    [10, "We have gained wisdom and honor"],
+    [14, "From our home of green and grey"],
+    [18, "We will go forth and remember"],
     [22, "All we've learned along the way"],
     [26, "And with knowledge and compassion"],
     [30, "We will build communities"],
     [34, "Leading by example"],
     [39, "And with dignity"],
     [43, "Georgia Gwinnett"],
-    [47, "We will never forget"],
+    [47, "We'll ne'er forget"],
     [51, "How we have grown"],
     [54, "And those that we have met"],
     [59, "Georgia Gwinnett"],
     [63, "With love and respect"],
-    [68, "Alma Mater"],
+    [68, "Our Alma Mater"],
     [72, "Georgia Gwinnett"],
-    [76, "Alma Mater"],
-    [80, "Georgia Gwinnett"]
+    [75, "Our Alma Mater"],
+    [80, "Georgia Gwinnett"],
+    [86, ""]
   ];
   
-      
+  //select the lyric 
   for(var i=0; i< lyrics_array.length; i++){
     
     if(lyrics_array[i][0] == Math.floor(filePos)){
