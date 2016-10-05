@@ -14,15 +14,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    protected void openMaps(){
-
-        Button maps = (Button) findViewById(R.id.btnMaps);
-
-        maps.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, MapsActivity.class));
-            }
-        });
+    protected void openMaps(View v) {
+        startActivity(new Intent(MainActivity.this, MapsActivity.class));
+    }
+    protected void openCampus(View v) {
+        startActivity(new Intent(MainActivity.this, GGCMapImageActivity.class));
+    }
+    protected void openAbout(View v) {
+        startActivity(new Intent(MainActivity.this, AboutActivity.class));
     }
 }
