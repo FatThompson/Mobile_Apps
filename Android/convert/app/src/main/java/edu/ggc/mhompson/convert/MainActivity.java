@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
                 double original = 100.0D;
                 double rate = 0.33333333D;
                 FetchAsyncTask task = new FetchAsyncTask();
-                task.execute("USB","GBP");
+                task.execute("USD","GBP");
                 //is API24 and above
                 DecimalFormat formater = new DecimalFormat("#,###.00");
                 output.setText(formater.format(original*rate));
