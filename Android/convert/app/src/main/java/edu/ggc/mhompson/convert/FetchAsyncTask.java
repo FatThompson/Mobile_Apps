@@ -2,18 +2,12 @@ package edu.ggc.mhompson.convert;
 
 import android.os.AsyncTask;
 import android.util.Log;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -43,12 +37,9 @@ public class FetchAsyncTask extends AsyncTask<String, Void, Double>{
         double conversionRate = getConverionRate(response,conversions[1]);
         Log.i("CurrConv","Conversion Rate:  " + conversionRate);
 
-        //Caculate the data
-
-
         //return/finish the thread
         Log.i("CurrConv","Backgrouded Ended" );
-        return null;
+        return conversionRate;
     }
 
     /**
@@ -63,20 +54,20 @@ public class FetchAsyncTask extends AsyncTask<String, Void, Double>{
         //if error, returns 0
         double conversionRate=0;
         try{
+            //parse into a json
             JSONObject responceJSON = new JSONObject(response);
 
-            //Idont think these are needed, I will delete if not
-//            String base = responceJSON.getString("base");
-//            String date = responceJSON.getString("date");
+            //get the conversion rate
             JSONObject rates = responceJSON.getJSONObject("rates");
             conversionRate = rates.getDouble(convertTo);
+
 //            Log.i("CurrConv","Conversion Rate:  " + conversionRate);
         }catch (JSONException JSONE){
             Log.e("CurrConv","JSONException:  "+JSONE);
         }catch (Exception E){
             Log.e("CurrConv","Other Exception:  "+ E);
         }
-
+        //return the conversion rate
         return conversionRate;
     }
 
