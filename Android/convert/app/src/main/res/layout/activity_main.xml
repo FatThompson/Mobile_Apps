@@ -12,48 +12,58 @@
 
 
     <TextView
-        android:text="TextView"
+        android:text="temp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="57dp"
         android:id="@+id/convertOutput"
         android:textSize="30sp"
-        android:layout_below="@+id/btnconvert"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/btnConvert" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:width="200sp"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/convertAmount"
+        android:layout_alignBottom="@+id/textView"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Enter Value to convert"
+        android:text="@string/convertToText"
+        android:textSize="20sp"
         android:id="@+id/textView"
-        android:layout_marginTop="76dp"
+        android:layout_marginTop="74dp"
         android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/editText" />
+        android:layout_toStartOf="@+id/convertAmount" />
 
-    <EditText
-        android:layout_width="wrap_content"
+    <Spinner
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:ems="10"
-        android:id="@+id/editText"
-        android:layout_alignBottom="@+id/textView"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="50dp" />
+        android:id="@+id/base"
+        android:entries="@array/conversionSpinners"
+        android:layout_below="@+id/convertAmount"
+        android:layout_alignStart="@+id/textView"
+        android:layout_marginTop="20dp" />
 
     <Button
-        android:text="Button"
+        android:text="@string/convertButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btnconvert"
-        android:layout_marginTop="124dp"
-        android:layout_below="@+id/editText"
+        android:id="@+id/btnConvert"
+        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/convertOutput"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="49dp"
-        android:id="@+id/base" />
+        android:id="@+id/convertTo"
+        android:entries="@array/conversionSpinners"
+        android:layout_above="@+id/btnConvert"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="12dp" />
+
 </RelativeLayout>

@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -17,35 +19,48 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final  Button convert = (Button) findViewById(R.id.btnconvert);
+        final Button convert = (Button) findViewById(R.id.btnConvert);
         final TextView output = (TextView) findViewById(R.id.convertOutput);
+        final EditText convertAmount = (EditText) findViewById(R.id.convertAmount);
+        final Spinner baseSpinner =(Spinner) findViewById(R.id.base);
+        final Spinner convertToSpinner =(Spinner) findViewById(R.id.convertTo);
 
-        convert.setOnClickListener(new View.OnClickListener(){
+
+
+
+        convert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                double original = 100.0D;
-                double rate = 0.33333333D;
 
-                //get and Caculate the convertion
-                double convertionRate = 0;
+                //defaults
+                double original = 0;
+                double conversionRate = 0;
+                String baseText;
+                String convertToText;
+
+
                 try{
+                    //get the original value
+                    original = Double.parseDouble(convertAmount.getText().toString());
+
+                    //get the currencies
+                    baseText = baseSpinner.getSelectedItem().toString();
+                    convertToText = convertToSpinner.getSelectedItem().toString();
+
+                    //run the converter
                     FetchAsyncTask task = new FetchAsyncTask();
-                    task.execute("USD","GBP");
-                    convertionRate = task.get();
-                }catch (ExecutionException EE){
-                    Log.e("CurrConv","ExecutionException:  "+EE);
-                }
-                catch(Exception E){
-                    Log.e("CurrConv","Other Exception:  "+E);
-                }
-                finally {
-                    Log.i("CurrConv","Conversion Rate:  "+convertionRate);
-                }
+                    task.execute(baseText,convertToText);
+                    conversionRate = task.get();
 
-                //Format the data and post
-                DecimalFormat formater = new DecimalFormat("#,###.00");
-                output.setText(formater.format(original*convertionRate));
+                    //format and display data
+                    DecimalFormat format = new DecimalFormat("#,###.00");
+                    output.setText(format.format(original*conversionRate+""));
 
+                } catch (InterruptedException IE){
+                    IE.printStackTrace();
+                } catch (ExecutionException EE) {
+                    EE.printStackTrace();
+                }
             }
         });
     }

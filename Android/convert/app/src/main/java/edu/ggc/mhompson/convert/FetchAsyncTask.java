@@ -55,10 +55,10 @@ public class FetchAsyncTask extends AsyncTask<String, Void, Double>{
         double conversionRate=0;
         try{
             //parse into a json
-            JSONObject responceJSON = new JSONObject(response);
+            JSONObject responseJSON = new JSONObject(response);
 
             //get the conversion rate
-            JSONObject rates = responceJSON.getJSONObject("rates");
+            JSONObject rates = responseJSON.getJSONObject("rates");
             conversionRate = rates.getDouble(convertTo);
 
 //            Log.i("CurrConv","Conversion Rate:  " + conversionRate);
@@ -68,7 +68,9 @@ public class FetchAsyncTask extends AsyncTask<String, Void, Double>{
             Log.e("CurrConv","Other Exception:  "+ E);
         }
         //return the conversion rate
-        return conversionRate;
+        if(conversionRate!=0)
+            return conversionRate;
+        else return 1;
     }
 
     /**
@@ -103,7 +105,9 @@ public class FetchAsyncTask extends AsyncTask<String, Void, Double>{
             String temp = "";
             while((temp = bufferedReader.readLine()) != null)
                 response += temp;
+
 //            Log.d("CurrConv:", "Response:  " + response);
+
         }catch(MalformedURLException MURLE){
             Log.e("CurrConv", "MalformedURLException:  "+MURLE);
         }catch(IOException IOE) {
