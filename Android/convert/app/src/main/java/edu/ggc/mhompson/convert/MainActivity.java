@@ -1,6 +1,6 @@
 package edu.ggc.mhompson.convert;
 
-import android.icu.text.DecimalFormat;
+import java.text.DecimalFormat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.ButtonBarLayout;
@@ -25,9 +25,9 @@ public class MainActivity extends AppCompatActivity {
                 double rate = 0.33333333D;
                 FetchAsyncTask task = new FetchAsyncTask();
                 task.execute("USB","GBP");
-                //is API24
-                //DecimalFormat formater = new DecimalFormat("#,###.00");
-                output.setText((original*rate) + "");
+                //is API24 and above
+                DecimalFormat formater = new DecimalFormat("#,###.00");
+                output.setText(formater.format(original*rate));
 
             }
         });
