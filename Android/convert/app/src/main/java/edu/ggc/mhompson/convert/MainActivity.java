@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
                     //format and display data
                     DecimalFormat format = new DecimalFormat("#,###.00");
-                    output.setText(format.format(original*conversionRate+""));
+                    output.setText(format.format(original*conversionRate));
 
                 } catch (InterruptedException IE){
                     IE.printStackTrace();
