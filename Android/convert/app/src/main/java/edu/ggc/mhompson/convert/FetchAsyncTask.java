@@ -34,7 +34,7 @@ public class FetchAsyncTask extends AsyncTask<String, Void, Double>{
         Log.i("Response:  ",response);
 
         //parse the data/ return converion rate
-        double conversionRate = getConverionRate(response,conversions[1]);
+        double conversionRate = getConversionRate(response,conversions[1]);
         Log.i("CurrConv","Conversion Rate:  " + conversionRate);
 
         //return/finish the thread
@@ -48,7 +48,7 @@ public class FetchAsyncTask extends AsyncTask<String, Void, Double>{
      * @param convertTo
      * @return
      */
-    private double getConverionRate(String response, String convertTo){
+    private double getConversionRate(String response, String convertTo){
         //SAMPLE
         //   {"base":"USD","date":"2016-10-12","rates":{"GBP":0.81661}}
         //if error, returns 0

@@ -20,5 +20,7 @@
         <item>THB</item>        <item>TRY</item>
         <item>USD</item>        <item>ZAR</item>
     </string-array>
-    <string name="baseStarter"></string>
+    <!--These need must be in the above array-->
+    <integer name="baseStarter">31</integer> <!--USD-->
+    <integer name="convertToStarter">10</integer> <!--GDP -->
 </resources>
