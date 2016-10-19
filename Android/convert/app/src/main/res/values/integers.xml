@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--These need must be in the above array-->
+    <integer name="baseStarter">30</integer> <!--USD-->
+    <integer name="convertToStarter">9</integer> <!--GDP -->
+</resources>

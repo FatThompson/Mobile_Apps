@@ -23,9 +23,11 @@ public class MainActivity extends AppCompatActivity {
         final Spinner baseSpinner =(Spinner) findViewById(R.id.base);
         final Spinner convertToSpinner =(Spinner) findViewById(R.id.convertTo);
 //
-//        this does not work
-//        baseSpinner.setSelection(R.integer.baseStarter);
-//        convertToSpinner.setSelection(R.integer.convertToStarter);
+//        this does works now. forgot to update comment.
+        int baseSpinnerInt = this.getResources().getInteger(R.integer.baseStarter);
+        int convertSpinnerInt = this.getResources().getInteger(R.integer.convertToStarter);
+        baseSpinner.setSelection(baseSpinnerInt);
+        convertToSpinner.setSelection(convertSpinnerInt);
 
         //get the button off screen
         final Button convert = (Button) findViewById(R.id.btnConvert);
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
      * Because ctl+y deletes lines in Linux, I had
      * To retype this method, so there are limited logs,
      * because there are no additional logs needed
-     * in my opinion.
+     * in my opinion.b
      */
     private void btnConvertOnClickListener(){
         //get the views off screen

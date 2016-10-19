@@ -4,25 +4,22 @@
     <string name="convertButton">Convert!</string>
     <string name="aboutText">Created by Matthew Thompson</string>
     <string-array name="conversionSpinners">
-        <item>AUD</item>        <item>BGN</item>
-        <item>BRL</item>        <item>CAD</item>
-        <item>CHF</item>        <item>CNY</item>
-        <item>CZK</item>        <item>DKK</item>
-        <item>EUR</item>        <item>GBP</item>
-        <item>HKD</item>        <item>HRK</item>
-        <item>HUF</item>        <item>IDR</item>
-        <item>ILS</item>        <item>INR</item>
-        <item>JPY</item>        <item>KRW</item>
-        <item>MXN</item>        <item>MYR</item>
-        <item>NOK</item>        <item>NZD</item>
-        <item>PHP</item>        <item>PLN</item>
-        <item>RON</item>        <item>RUB</item>
-        <item>SEK</item>        <item>SGD</item>
-        <item>THB</item>        <item>TRY</item>
-        <item>USD</item>        <item>ZAR</item>
-    </string-array>
-    <!--These need must be in the above array-->
-    <integer name="baseStarter">31</integer> <!--USD-->
-    <integer name="convertToStarter">10</integer> <!--GDP -->
+    <!-- 00 -->  <item>AUD</item>  <!-- 01 -->  <item>BGN</item>
+    <!-- 02 -->  <item>BRL</item>  <!-- 03 -->  <item>CAD</item>
+    <!-- 04 -->  <item>CHF</item>  <!-- 05 -->  <item>CNY</item>
+    <!-- 06 -->  <item>CZK</item>  <!-- 07 -->  <item>DKK</item>
+    <!-- 08 -->  <item>EUR</item>  <!-- 09 -->  <item>GBP</item>
+    <!-- 10 -->  <item>HKD</item>  <!-- 11 -->  <item>HRK</item>
+    <!-- 12 -->  <item>HUF</item>  <!-- 13 -->  <item>IDR</item>
+    <!-- 14 -->  <item>ILS</item>  <!-- 15 -->  <item>INR</item>
+    <!-- 16 -->  <item>JPY</item>  <!-- 17 -->  <item>KRW</item>
+    <!-- 18 -->  <item>MXN</item>  <!-- 19 -->  <item>MYR</item>
+    <!-- 20 -->  <item>NOK</item>  <!-- 21 -->  <item>NZD</item>
+    <!-- 22 -->  <item>PHP</item>  <!-- 23 -->  <item>PLN</item>
+    <!-- 24 -->  <item>RON</item>  <!-- 25 -->  <item>RUB</item>
+    <!-- 26 -->  <item>SEK</item>  <!-- 27 -->  <item>SGD</item>
+    <!-- 28 -->  <item>THB</item>  <!-- 29 -->  <item>TRY</item>
+    <!-- 30 -->  <item>USD</item>  <!-- 31 -->  <item>ZAR</item>
+    </string-array>>
 
 </resources>
