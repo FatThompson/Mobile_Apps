@@ -2,6 +2,7 @@
     <string name="app_name">convert</string>
     <string name="convertToText">Enter Value to convert:</string>
     <string name="convertButton">Convert!</string>
+    <string name="aboutText">Created by Matthew Thompson</string>
     <string-array name="conversionSpinners">
         <item>AUD</item>        <item>BGN</item>
         <item>BRL</item>        <item>CAD</item>
@@ -23,4 +24,5 @@
     <!--These need must be in the above array-->
     <integer name="baseStarter">31</integer> <!--USD-->
     <integer name="convertToStarter">10</integer> <!--GDP -->
+
 </resources>
