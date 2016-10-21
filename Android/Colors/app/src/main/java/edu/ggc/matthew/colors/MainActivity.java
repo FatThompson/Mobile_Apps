@@ -8,12 +8,8 @@ import android.widget.SeekBar;
 public class MainActivity extends AppCompatActivity {
     final private String TAG = "Colors.MainActivity";
 
-    // We have to pull in two different methods for these
-    // so I am making globle within the app
-    final private SeekBar alphaSeek = (SeekBar) findViewById(R.id.alphaSeekBar);
-    final private SeekBar redSeek = (SeekBar) findViewById(R.id.redSeekBar);
-    final private SeekBar greenSeek = (SeekBar) findViewById(R.id.greenSeekBar);
-    final private SeekBar blueSeek = (SeekBar) findViewById(R.id.blueSeekBar);
+    //converts a number 0-100 to a 15^2 number
+    final double SWAY = 2.55;
 
 
 
@@ -22,6 +18,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        final SeekBar alphaSeek = (SeekBar) findViewById(R.id.alphaSeekBar);
+        final SeekBar redSeek = (SeekBar) findViewById(R.id.redSeekBar);
+        final SeekBar greenSeek = (SeekBar) findViewById(R.id.greenSeekBar);
+        final SeekBar blueSeek = (SeekBar) findViewById(R.id.blueSeekBar);
         //Add the seekbar listener
         SeekBarListener(alphaSeek);
         SeekBarListener(redSeek);
@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
         //nvm change by the value and reset the box by all on any movement
         //Not effecient but it will work
 
-        final double SWAY = 2.55;
         mySeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -62,9 +61,19 @@ public class MainActivity extends AppCompatActivity {
 
     public void changeColorView(){
 
+        final SeekBar alphaSeek = (SeekBar) findViewById(R.id.alphaSeekBar);
+        final SeekBar redSeek = (SeekBar) findViewById(R.id.redSeekBar);
+        final SeekBar greenSeek = (SeekBar) findViewById(R.id.greenSeekBar);
+        final SeekBar blueSeek = (SeekBar) findViewById(R.id.blueSeekBar);
         //from here, gather the progress and convert the int val to 255 multiple
         //Then we can modify page from that.
-        int progressShift = (int) Math.round(progress*SWAY);
-        Log.i(TAG, "Progress Changed. It is at " + progressShift);
+        int alphaProgressShift = (int) Math.round(alphaSeek.getProgress()*SWAY);
+        Log.i(TAG, "Progress Changed. It is at " + alphaProgressShift);
+        int redProgressShift = (int) Math.round(redSeek.getProgress()*SWAY);
+        Log.i(TAG, "Progress Changed. It is at " + redProgressShift);
+        int greenProgressShift = (int) Math.round(greenSeek.getProgress()*SWAY);
+        Log.i(TAG, "Progress Changed. It is at " + greenProgressShift);
+        int blueProgressShift = (int) Math.round(blueSeek.getProgress()*SWAY);
+        Log.i(TAG, "Progress Changed. It is at " + blueProgressShift);
     }
 }
