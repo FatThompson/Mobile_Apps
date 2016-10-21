@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Colors</string>
+    <string name="Red_Text_View">Red</string>
+    <string name="Blue_Text_View">Blue</string>
+    <string name="Green_Text_View">Green</string>
+    <string name="Alpha_Text_View">Alpha</string>
 </resources>
