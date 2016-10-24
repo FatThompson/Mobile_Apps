@@ -4,4 +4,5 @@
     <string name="Blue_Text_View">Blue</string>
     <string name="Green_Text_View">Green</string>
     <string name="Alpha_Text_View">Alpha</string>
+    <string name="Alpha_Warn_Text">alpha below 50. Making darker to make it visible.</string>
 </resources>
