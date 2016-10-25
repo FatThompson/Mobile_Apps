@@ -97,7 +97,7 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="@string/Alpha_Warn_Text"
-        android:textSize="15dp"
+        android:textSize="20dp"
         android:textStyle="bold"
         android:gravity="center"
         android:layout_centerHorizontal="true"
@@ -105,5 +105,16 @@
         android:layout_marginStart="49dp"
         android:layout_marginBottom="25dp"
         android:id="@+id/warnAlphaTooLow"/>
+
+    <Button
+        android:text="Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="25dp"
+        android:id="@+id/btnAbout"
+        android:onClick="openAbout" />
+
 
 </RelativeLayout>
