@@ -15,80 +15,113 @@ public class MainActivity extends AppCompatActivity {
     //converts a number 0-100 to a 15^2 number
     final double SWAY = 2.55;
 
+    /**
+     * The main logic of the app
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Gather seekBars
         final SeekBar alphaSeek = (SeekBar) findViewById(R.id.alphaSeekBar);
         final SeekBar redSeek = (SeekBar) findViewById(R.id.redSeekBar);
         final SeekBar greenSeek = (SeekBar) findViewById(R.id.greenSeekBar);
         final SeekBar blueSeek = (SeekBar) findViewById(R.id.blueSeekBar);
 
-        //Add the seekbar listener
+        //Add the seekBar listener
         SeekBarListener(alphaSeek);
         SeekBarListener(redSeek);
         SeekBarListener(greenSeek);
         SeekBarListener(blueSeek);
     }
+
+    /**
+     * Opens the about activity.
+     * Assigned the button by the XML
+     * @param v
+     */
     protected void openAbout(View v) {
         startActivity(new Intent(MainActivity.this, AboutActivity.class));
     }
 
+    /**
+     * Assigns the listener to the seekBars more
+     * generically
+     * @param mySeekBar
+     */
     private void SeekBarListener(SeekBar mySeekBar) {
         //add the listener generically
         mySeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            //unused
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                //Change the color of the view
-                changeColorView();
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {changeColorView();}
+
+            /**
+             * small popup for the user
+             * @param seekBar
+             */
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                final TextView alphaWarn = (TextView) findViewById(R.id.warnAlphaTooLow);
+                alphaWarn.setText(R.string.Alpha_Warn_Text);
+                alphaWarn.setVisibility(View.VISIBLE);
             }
 
+            /**
+             * change the values then get ride of pop up
+             * @param seekBar
+             */
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                changeColorView();
+                final TextView alphaWarn = (TextView) findViewById(R.id.warnAlphaTooLow);
+                alphaWarn.setVisibility(View.INVISIBLE);
+            }
         });
     }
 
-    private void changeColorView(){
-
+    /**
+     * This is the logic behind the changing the textview for the
+     * display and change the alpha of the background
+     * (Based on the image in document)
+     */
+    private void changeColorView() {
+        //gather the seek bars
         final SeekBar alphaSeek = (SeekBar) findViewById(R.id.alphaSeekBar);
         final SeekBar redSeek = (SeekBar) findViewById(R.id.redSeekBar);
         final SeekBar greenSeek = (SeekBar) findViewById(R.id.greenSeekBar);
         final SeekBar blueSeek = (SeekBar) findViewById(R.id.blueSeekBar);
 
         //from here, gather the progress and convert the int val to 255 multiple
-        int alphaProgressShift = (int) Math.round(alphaSeek.getProgress()*SWAY);//Log.i(TAG, "Alpha Progress Changed. It is at " + alphaProgressShift);
-        int redProgressShift = (int) Math.round(redSeek.getProgress()*SWAY);    //Log.i(TAG, "Red Progress Changed. It is at " + redProgressShift);
-        int greenProgressShift = (int) Math.round(greenSeek.getProgress()*SWAY);//Log.i(TAG, "Green Progress Changed. It is at " + greenProgressShift);
-        int blueProgressShift = (int) Math.round(blueSeek.getProgress()*SWAY);  //Log.i(TAG, "Blue Progress Changed. It is at " + blueProgressShift);
+        //I posted my test logs behind statements for the time being
+        int alphaProgressShift = (int) Math.round(alphaSeek.getProgress() * SWAY);//Log.i(TAG, "Alpha Progress Changed. It is at " + alphaProgressShift);
+        int redProgressShift = (int) Math.round(redSeek.getProgress() * SWAY);    //Log.i(TAG, "Red Progress Changed. It is at " + redProgressShift);
+        int greenProgressShift = (int) Math.round(greenSeek.getProgress() * SWAY);//Log.i(TAG, "Green Progress Changed. It is at " + greenProgressShift);
+        int blueProgressShift = (int) Math.round(blueSeek.getProgress() * SWAY);  //Log.i(TAG, "Blue Progress Changed. It is at " + blueProgressShift);
 
-        //change the text of the text frame color
-        final TextView colorDumpTV= (TextView) findViewById(R.id.colorDumpTextView);
+        //gather the textView
+        final TextView colorDumpTV = (TextView) findViewById(R.id.colorDumpTextView);
+
+        //deal with color shift
+        int colorInt = Color.rgb(redProgressShift, greenProgressShift, blueProgressShift);
+        if (colorInt >= -8000000) colorDumpTV.setTextColor(Color.argb(255, 0, 0, 0));
+        else colorDumpTV.setTextColor(Color.argb(255, 255, 255, 255));
+        Log.i(TAG, "set text color to " + colorInt);
+
+        //Gather the text for the TEXT view
         String allHex = convertAllToHex(
-                alphaProgressShift,redProgressShift,
-                greenProgressShift,blueProgressShift);
+                alphaProgressShift, redProgressShift,
+                greenProgressShift, blueProgressShift);
         colorDumpTV.setText(allHex);
-        Log.i(TAG, "Color to display: " + allHex );
+        colorDumpTV.setBackgroundColor(colorInt);
+        Log.i(TAG, "Color to display: " + allHex);
 
-        //Check alpha if is to light
-        final TextView alphaWarn = (TextView) findViewById(R.id.warnAlphaTooLow);
-        if(alphaProgressShift<50) {
-            alphaProgressShift = 255;
-            alphaWarn.setVisibility(View.VISIBLE);
-            Log.w(TAG,"WARN: Alpha too light, changing to Alpha:FF");
-            String alphaWarnText = getString(R.string.Alpha_Warn_Text);
-            alphaWarnText = alphaWarnText + "\nReal Color Shown is: "+convertAllToHex(
-                    alphaProgressShift,redProgressShift,
-                    greenProgressShift,blueProgressShift);
-            alphaWarn.setText(alphaWarnText);
-        }
-        else alphaWarn.setVisibility(View.INVISIBLE);
-
-        colorDumpTV.setTextColor(Color.argb(alphaProgressShift,redProgressShift,greenProgressShift,blueProgressShift));
-
+        //Change the background Alpha
+        View activity_main_background = findViewById(R.id.activity_main);
+        activity_main_background.getBackground().setAlpha(alphaProgressShift);
+        Log.i(TAG, "Changed the background alpha to " + alphaProgressShift);
     }
     private String convertAllToHex(int avalue,int rvalue,int gvalue,int bvalue){
         String hex = "#" + convertToHex(avalue)+convertToHex(rvalue)+convertToHex(gvalue)+convertToHex(bvalue);
