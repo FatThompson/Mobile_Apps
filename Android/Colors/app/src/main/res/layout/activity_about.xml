@@ -20,15 +20,14 @@
         android:layout_alignTop="@+id/me"
         android:layout_centerHorizontal="true"
         android:id="@+id/textView2" />
-
-    <ImageView
+    <TextView
+        android:text="Matthew Thompson"
+        android:textSize="30sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/about_photo"
-        android:id="@+id/me"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="23dp" />
+        android:layout_below="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/MyName" />
 
     <TextView
         android:text="ITEC 4550 \n Fall 2016"
@@ -38,4 +37,11 @@
         android:id="@+id/textView3"
         android:layout_alignParentBottom="true"
         android:layout_alignEnd="@+id/textView2" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/about_photo"
+        android:id="@+id/me"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

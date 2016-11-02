@@ -24,6 +24,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Run the text change
+        changeColorView();
+
         //Gather seekBars
         final SeekBar alphaSeek = (SeekBar) findViewById(R.id.alphaSeekBar);
         final SeekBar redSeek = (SeekBar) findViewById(R.id.redSeekBar);
@@ -35,6 +38,10 @@ public class MainActivity extends AppCompatActivity {
         SeekBarListener(redSeek);
         SeekBarListener(greenSeek);
         SeekBarListener(blueSeek);
+
+        //Change the background Alpha
+        final View activity_main_background = findViewById(R.id.activity_main);
+        activity_main_background.getBackground().setAlpha(120);
     }
 
     /**
@@ -54,9 +61,16 @@ public class MainActivity extends AppCompatActivity {
     private void SeekBarListener(SeekBar mySeekBar) {
         //add the listener generically
         mySeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            //unused
+            /**
+             * Unused
+             * @param seekBar
+             * @param progress
+             * @param fromUser
+             */
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {changeColorView();}
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                changeColorView();
+            }
 
             /**
              * small popup for the user
@@ -64,9 +78,9 @@ public class MainActivity extends AppCompatActivity {
              */
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                final TextView alphaWarn = (TextView) findViewById(R.id.warnAlphaTooLow);
-                alphaWarn.setText(R.string.Alpha_Warn_Text);
-                alphaWarn.setVisibility(View.VISIBLE);
+//                final TextView alphaWarn = (TextView) findViewById(R.id.warnAlphaTooLow);
+//                alphaWarn.setText(R.string.Alpha_Warn_Text);
+//                alphaWarn.setVisibility(View.VISIBLE);
             }
 
             /**
@@ -75,9 +89,9 @@ public class MainActivity extends AppCompatActivity {
              */
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                changeColorView();
-                final TextView alphaWarn = (TextView) findViewById(R.id.warnAlphaTooLow);
-                alphaWarn.setVisibility(View.INVISIBLE);
+//                changeColorView();
+//                final TextView alphaWarn = (TextView) findViewById(R.id.warnAlphaTooLow);
+//                alphaWarn.setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -104,24 +118,29 @@ public class MainActivity extends AppCompatActivity {
         //gather the textView
         final TextView colorDumpTV = (TextView) findViewById(R.id.colorDumpTextView);
 
-        //deal with color shift
-        int colorInt = Color.rgb(redProgressShift, greenProgressShift, blueProgressShift);
-        if (colorInt >= -8000000) colorDumpTV.setTextColor(Color.argb(255, 0, 0, 0));
-        else colorDumpTV.setTextColor(Color.argb(255, 255, 255, 255));
-        Log.i(TAG, "set text color to " + colorInt);
-
         //Gather the text for the TEXT view
         String allHex = convertAllToHex(
                 alphaProgressShift, redProgressShift,
                 greenProgressShift, blueProgressShift);
         colorDumpTV.setText(allHex);
+
+        //deal with color shift
+        int colorInt = Color.argb(alphaProgressShift, redProgressShift, greenProgressShift, blueProgressShift);
+        colorDumpTV.setTextColor(getLightDark(colorInt));
         colorDumpTV.setBackgroundColor(colorInt);
         Log.i(TAG, "Color to display: " + allHex);
 
-        //Change the background Alpha
-        View activity_main_background = findViewById(R.id.activity_main);
-        activity_main_background.getBackground().setAlpha(alphaProgressShift);
-        Log.i(TAG, "Changed the background alpha to " + alphaProgressShift);
+
+    }
+    private int getLightDark(int color){
+        int red = Color.red(color);
+        int green = Color.green(color);
+        int blue = Color.blue(color);
+
+        Log.i(TAG, "set text color to average of " + (red+blue+green)/3 + ".");
+        if((red+blue+green)/3 < 100)
+            return Color.WHITE;
+        return Color.BLACK;
     }
     private String convertAllToHex(int avalue,int rvalue,int gvalue,int bvalue){
         String hex = "#" + convertToHex(avalue)+convertToHex(rvalue)+convertToHex(gvalue)+convertToHex(bvalue);
