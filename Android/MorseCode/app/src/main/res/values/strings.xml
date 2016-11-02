@@ -3,4 +3,6 @@
     <string name="editTextHint">Text to Transmit:</string>
     <string name="btnTransmitText">Click to Transmit</string>
     <string name="transmissionIndicatorText">Transmission in progress.</string>
+    <string name="btnAbout">Click for About Screen</string>
+    <string name="description">descripsionts</string>
 </resources>

@@ -26,7 +26,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/etxMorse"
         android:layout_centerHorizontal="true"
-        android:id="@+id/btnTransmit" />
+        android:id="@+id/btnTransmit"
+        android:onClick="transmitCode"
+        />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,19 +40,20 @@
         android:visibility="invisible"/>
 
     <View
-        android:layout_alignParentBottom="true"
+        android:id="@+id/MorseDisplay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/transmissionIndicator"
-        android:background="@color/colorGrey" />
+        android:background="@color/colorGrey"
+        android:layout_above="@+id/btnAbout" />
 
     <Button
-        android:text="@string/btnTransmitText"
+        android:layout_alignParentBottom="true"
+        android:text="@string/btnAbout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etxMorse"
         android:layout_centerHorizontal="true"
         android:id="@+id/btnAbout"
-        android:onClick=""/>
+        android:onClick="openAbout"/>
 </RelativeLayout>
