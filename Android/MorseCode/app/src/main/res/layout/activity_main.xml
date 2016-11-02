@@ -10,8 +10,47 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="edu.ggc.matthew.morsecode.MainActivity">
 
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/etxMorse"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:hint="@string/editTextHint" />
+
+    <Button
+        android:text="@string/btnTransmitText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etxMorse"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/btnTransmit" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/btnTransmit"
+        android:id="@+id/transmissionIndicator"
+        android:text="@string/transmissionIndicatorText"
+        android:textSize="30sp"
+        android:visibility="invisible"/>
+
+    <View
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/transmissionIndicator"
+        android:background="@color/colorGrey" />
+
+    <Button
+        android:text="@string/btnTransmitText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etxMorse"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/btnAbout"
+        android:onClick=""/>
 </RelativeLayout>
