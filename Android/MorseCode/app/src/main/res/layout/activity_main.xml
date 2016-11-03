@@ -46,14 +46,18 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/transmissionIndicator"
         android:background="@color/colorGrey"
-        android:layout_above="@+id/btnAbout" />
+        android:layout_above="@+id/btnAbout"
+
+        />
 
     <Button
-        android:layout_alignParentBottom="true"
         android:text="@string/btnAbout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:id="@+id/btnAbout"
         android:onClick="openAbout"/>
+
+
 </RelativeLayout>
