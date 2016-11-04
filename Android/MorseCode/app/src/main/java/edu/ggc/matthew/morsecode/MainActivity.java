@@ -27,7 +27,8 @@ public class MainActivity extends AppCompatActivity {
 
     protected void transmitCode(View view){
         Log.i(TAG,"Transmit Button Clicked.");
-        TrasmitTask trasmitTask = new TrasmitTask();
+        TrasmitTask trasmitTask = new TrasmitTask(MainActivity.this);
+        trasmitTask.execute();
     }
 
 
