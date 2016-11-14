@@ -3,6 +3,7 @@ package lutz.ggc.edu.ggctarsosdspandroid;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +24,9 @@ import be.tarsos.dsp.pitch.PitchProcessor.PitchEstimationAlgorithm;
 public class TarsosDSPActivity extends AppCompatActivity {
 
     private ArrayList<Float> pitchList =  new ArrayList<Float>();
+    private final int PATCH_LIST_MAX = 75;
+    private final int PATCH_LIST_MIN_TO_DISPLAY = 10;
+    private float changeInPitch;
 
 
 	@Override
@@ -166,9 +170,9 @@ public class TarsosDSPActivity extends AppCompatActivity {
 		else if (  719.23 <=     pitch && pitch <  761.99 ) { letter = "G"; flat = " \u266D "; oct = " 5  " ; }
 		else if (  761.99 <=     pitch && pitch <  807.30 ) { letter = "G"; flat = "    "; oct = " 5  " ; }
 		else if (  807.30 <=     pitch && pitch <  855.31 ) { letter = "A"; flat = " \u266D "; oct = " 5  " ; }
-		else if (  855.31 <=     pitch && pitch <  906.17 ) { letter = "A"; flat = "    "; oct = " 5  " ; }
-		else if (  906.17 <=     pitch && pitch <  960.05 ) { letter = "B"; flat = " \u266D "; oct = " 5  " ; }
-		else if (  960.05 <=     pitch && pitch <  1017.14    ) { letter = "B"; flat = "    "; oct = " 5  " ; }
+		else if (  855.31     <=     pitch && pitch <  906.17 ) { letter = "A"; flat = "    "; oct = " 5  " ; }
+		else if (  906.17     <=     pitch && pitch <  960.05 ) { letter = "B"; flat = " \u266D "; oct = " 5  " ; }
+		else if (  960.05     <=     pitch && pitch <  1017.14    ) { letter = "B"; flat = "    "; oct = " 5  " ; }
 		else if (  1017.14    <=     pitch && pitch <  1077.62    ) { letter = "C"; flat = "    "; oct = " 6  " ; }
 		else if (  1077.62    <=     pitch && pitch <  1141.70    ) { letter = "D"; flat = " \u266D "; oct = " 6  " ; }
 		else if (  1141.70    <=     pitch && pitch <  1209.59    ) { letter = "D"; flat = "    "; oct = " 6  " ; }
@@ -207,23 +211,49 @@ public class TarsosDSPActivity extends AppCompatActivity {
 		else if (  7680.38    <=     pitch && pitch <  3951.07    ) { letter = "B"; flat = "    "; oct = " 8  " ; }
 		else {letter = "--"; flat = ""; oct = "";}
 
-		TextView textView = (TextView) findViewById(R.id.textView1);
-        textView.setText("Letter: " + letter + ", Flat: " + flat + ", Octive: " + oct);
+
+        TextView textView = (TextView) findViewById(R.id.textView1);
+        if(pitchList.size() > PATCH_LIST_MIN_TO_DISPLAY) {
+            textView.setText("Letter: " + letter + ", Flat: " + flat + ", Octive: " + oct);
+        } else if(pitchList.size() < PATCH_LIST_MIN_TO_DISPLAY)
+            letter = "--"; flat = ""; oct = "";
+            textView.setText("Letter: " + letter + ", Flat: " + flat + ", Octive: " + oct);
+
 	}
 
+    /**
+     * Creation of a low pass filter
+     * @param pitch
+     * @return
+     */
     private float lowPassFilter(float pitch) {
         //add to the end of the list
-        pitchList.add(new Float(pitch));
+        if(pitch >= 15) pitchList.add(new Float(pitch));
+        //else remove one
+        else if(pitchList.size() > 0) pitchList.remove(0);
+
         //if list is too long, trim down, and
         //remove the first choice.
-        if(pitchList.size()>50){
+        if(pitchList.size()>= PATCH_LIST_MAX){
             pitchList.remove(0);
         }
         pitch = getAverage(pitchList);
-//        Log.i("PitchLIst","pitch: "+pitch);
+
+        //helps make more snappy on changing
+        if(Math.abs(pitch-changeInPitch) > 3) if(pitchList.size() > 0)  pitchList.remove(0); changeInPitch = pitch;
+
+        if(pitch < 15) pitchList.clear();
+
+
+        Log.i("PitchLIst","pitch: "+pitch);
         return pitch;
     }
 
+    /**
+     * gets the average of an array list
+     * @param arraylist
+     * @return average as float
+     */
     private float getAverage(ArrayList<Float> arraylist) {
         float temp = 0;
         int arraylist_size = arraylist.size();
