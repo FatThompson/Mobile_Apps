@@ -24,10 +24,11 @@ import be.tarsos.dsp.pitch.PitchProcessor.PitchEstimationAlgorithm;
 public class TarsosDSPActivity extends AppCompatActivity {
 
     private ArrayList<Float> pitchList =  new ArrayList<Float>();
-    private final int PATCH_LIST_MAX = 25;
-    private final int PATCH_LIST_MIN_TO_DISPLAY = 7;
+    private final int PITCH_LIST_MAX = 25;
+    private final int PITCH_LIST_MIN_TO_DISPLAY = 7;
+	private final int MAX_PITCH_CHANGE = 3;
     private float changeInPitch;
-
+    Thread pitchThread;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,22 +40,24 @@ public class TarsosDSPActivity extends AppCompatActivity {
 		}
 		AudioDispatcher dispatcher = AudioDispatcherFactory.fromDefaultMicrophone(22050,1024,0);
 
-		dispatcher.addAudioProcessor(new PitchProcessor(PitchEstimationAlgorithm.FFT_YIN, 22050, 1024, new PitchDetectionHandler() {
+		dispatcher.addAudioProcessor(new PitchProcessor(PitchEstimationAlgorithm.FFT_YIN, 22050, 1024,
+                new PitchDetectionHandler() {
 
-			@Override
-			public void handlePitch(PitchDetectionResult pitchDetectionResult,
-					AudioEvent audioEvent) {
-			final float pitchInHz = pitchDetectionResult.getPitch();
-			runOnUiThread(new Runnable() {
-				 @Override
-				 public void run() {
-					 displayPitch(pitchInHz);
-				}
-			});
+                @Override
+                public void handlePitch(PitchDetectionResult pitchDetectionResult,
+                    AudioEvent audioEvent) {
+                        final float pitchInHz = pitchDetectionResult.getPitch();
+                        runOnUiThread(new Runnable() {
+                             @Override
+                             public void run() {
+                                 displayPitch(pitchInHz);
+                            }
+                        });
 
-			}
-		}));
-		new Thread(dispatcher,"Audio Dispatcher").start();
+                    }
+		    }));
+		pitchThread = new Thread(dispatcher,"Audio Dispatcher");
+        pitchThread.start();
 
 	}
 
@@ -104,11 +107,9 @@ public class TarsosDSPActivity extends AppCompatActivity {
 
 		String pitchInfo[] = new String[3];
 		//check to see if long enough
-		if(pitchList.size() > PATCH_LIST_MIN_TO_DISPLAY){
+		if(pitchList.size() > PITCH_LIST_MIN_TO_DISPLAY){
 			pitchInfo = getNoteInfo(pitch);
 		} else pitchInfo = getNoteInfo(0);
-
-
 
         TextView txvNote = (TextView) findViewById(R.id.txvNote);
 		TextView txvFlat = (TextView) findViewById(R.id.txvFlat);
@@ -264,16 +265,21 @@ public class TarsosDSPActivity extends AppCompatActivity {
 
         //if list is too long, trim down, and
         //remove the first choice.
-        if(pitchList.size()>= PATCH_LIST_MAX){
+        if(pitchList.size()>= PITCH_LIST_MAX) if(pitchList.size() > 0)
             pitchList.remove(0);
-        }
+
+
         pitch = getAverage(pitchList);
 
         //helps make more snappy on changing
-        if(Math.abs(pitch-changeInPitch) > 3) if(pitchList.size() > 0)  pitchList.remove(0); changeInPitch = pitch;
+        if(Math.abs(pitch-changeInPitch) > MAX_PITCH_CHANGE) if(pitchList.size() > 0)
+			pitchList.remove(0);
 
-        if(pitch < 15) if(pitchList.size() > 0) pitchList.remove(0);
+		//update the pitch
+		changeInPitch = pitch;
 
+        if(pitch < 15) if(pitchList.size() > 0)
+			pitchList.remove(0);
 
         Log.i("PitchLIst","pitch: "+pitch);
         return pitch;
@@ -294,5 +300,23 @@ public class TarsosDSPActivity extends AppCompatActivity {
         else temp=0;
 
         return temp;
+    }
+
+    /**
+     * Open the about view
+     * @param view
+     */
+    protected void openAbout(View view) {
+        Log.e("OPEN ABOUT FAIL","Stoping the thread is breaking program.");
+//       stopThread(pitchThread);
+//        startActivity(new Intent(TarsosDSPActivity.this, AboutActivity.class));
+    }
+    private synchronized void stopThread(Thread theThread)
+    {
+        Log.i("STOPING THREAD","STOPPING THREAD");
+        if (theThread != null)
+        {
+            theThread = null;
+        }
     }
 }
