@@ -9,18 +9,32 @@
     tools:context="be.tarsos.tarsos.dsp.android.ui.TarsosDSPActivity$PlaceholderFragment" >
 
     <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
+        android:id="@+id/txvNote"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="60sp"
+        android:layout_width="60sp"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:text="__"
+        android:gravity="right"
+        android:textSize="60sp" />
 
     <TextView
-        android:text="TextView"
+        android:text=""
+        android:layout_width="20sp"
+        android:layout_height="wrap_content"
+        android:id="@+id/txvFlat"
+        android:layout_toEndOf="@+id/txvNote"
+        android:layout_alignTop="@+id/txvNote"
+        android:layout_marginStart="0dp" />
+
+    <TextView
+        android:text="_"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
-        android:layout_alignEnd="@+id/textView1"
-        android:layout_marginTop="15dp"
-        android:id="@+id/textView2" />
+        android:id="@+id/txvOct"
+        android:layout_toEndOf="@+id/txvFlat"
+        android:layout_alignBottom="@+id/txvNote"
+        android:layout_marginStart="0dp" />
 
 </RelativeLayout>
