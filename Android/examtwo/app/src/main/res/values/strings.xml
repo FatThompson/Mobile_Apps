@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Grizzly Tile Calculator</string>
+    <string name="spinnerHint">Tile Size</string>
+    <string-array name="spinnerArray">
+        <item>12in X 12in</item>
+        <item>18in X 18in</item>
+    </string-array>
+    <string name="btnCalc">Calculate</string>
+</resources>

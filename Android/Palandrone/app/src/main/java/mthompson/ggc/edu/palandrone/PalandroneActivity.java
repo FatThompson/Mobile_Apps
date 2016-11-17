@@ -1,10 +1,9 @@
 package mthompson.ggc.edu.palandrone;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -32,7 +31,7 @@ public class PalandroneActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 ivImage.setImageResource(
-                        PalandroneUtil.isPalandrone(etInput.toString())?
+                        PalandroneUtil.isPalandrone(etInput.getText().toString())?
                                 R.drawable.yes :
                                 R.drawable.no);
             }

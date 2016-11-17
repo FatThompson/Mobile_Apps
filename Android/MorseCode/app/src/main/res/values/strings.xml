@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">MorseCode</string>
+    <string name="editTextHint">Text to Transmit:</string>
+    <string name="btnTransmitText">Click to Transmit</string>
+    <string name="transmissionIndicatorText">Transmission in progress.</string>
+    <string name="btnAbout">Click for About Screen</string>
+    <string name="description">This app will translate a textual statement to morse code.</string>
 </resources>
