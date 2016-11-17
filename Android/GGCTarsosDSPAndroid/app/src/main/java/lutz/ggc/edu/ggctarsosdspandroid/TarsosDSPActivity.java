@@ -254,6 +254,7 @@ public class TarsosDSPActivity extends AppCompatActivity {
 
     /**
      * Creation of a low pass filter
+	 * Takes the average of the arraylist.
      * @param pitch
      * @return
      */
