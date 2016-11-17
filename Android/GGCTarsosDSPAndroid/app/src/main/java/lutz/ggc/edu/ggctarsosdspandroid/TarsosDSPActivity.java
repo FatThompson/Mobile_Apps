@@ -34,6 +34,8 @@ public class TarsosDSPActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_tarsos_dsp);
+
+
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
@@ -57,7 +59,7 @@ public class TarsosDSPActivity extends AppCompatActivity {
                     }
 		    }));
 		pitchThread = new Thread(dispatcher,"Audio Dispatcher");
-        pitchThread.start();
+		pitchThread.start();
 
 	}
 
@@ -118,9 +120,7 @@ public class TarsosDSPActivity extends AppCompatActivity {
 		txvNote.setText(pitchInfo[0]+"");
 		txvFlat.setText(pitchInfo[1] + "");
 		txvOct.setText(pitchInfo[2] + "");
-
-
-	}
+    }
 
     /**
      * Converts pitch to note with flats and octive
@@ -293,30 +293,18 @@ public class TarsosDSPActivity extends AppCompatActivity {
     private float getAverage(ArrayList<Float> arraylist) {
         float temp = 0;
         int arraylist_size = arraylist.size();
-        for(int i=0; i < arraylist_size; i++){
-            temp += arraylist.get(i);
+
+        if(arraylist_size>0) {
+            for (int i = 0; i < arraylist_size; i++) {
+                temp += arraylist.get(i);
+            }
+            temp /= arraylist_size;
         }
-        if(arraylist_size>0) temp/=arraylist_size;
-        else temp=0;
+        else return 0;
 
         return temp;
     }
 
-    /**
-     * Open the about view
-     * @param view
-     */
-    protected void openAbout(View view) {
-        Log.e("OPEN ABOUT FAIL","Stoping the thread is breaking program.");
-//       stopThread(pitchThread);
-//        startActivity(new Intent(TarsosDSPActivity.this, AboutActivity.class));
-    }
-    private synchronized void stopThread(Thread theThread)
-    {
-        Log.i("STOPING THREAD","STOPPING THREAD");
-        if (theThread != null)
-        {
-            theThread = null;
-        }
-    }
+
+
 }

@@ -38,14 +38,5 @@
         android:layout_alignBottom="@+id/txvNote"
         android:layout_marginStart="0dp" />
 
-    <Button
-        android:text="@string/btnAbout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="50dp"
-        android:id="@+id/button"
-        android:onClick="openAbout" />
 
 </RelativeLayout>

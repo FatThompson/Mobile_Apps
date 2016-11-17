@@ -5,12 +5,12 @@ package mthompson.ggc.edu.palandrone;
  */
 public class PalandroneUtil {
 
-    public static boolean isPalandrone(String text){
-        int length = text.length();
-        while(text.length() > 2){
-            if(!(text.substring(0,0).equals(text.substring(text.length()-1))))
-                return false;
-        }
-        return true;
+    public static boolean isPalandrone(String inputString){
+        String reverseString = "";
+        for ( int i = inputString.length() - 1 ; i >= 0 ; i-- )
+            reverseString = reverseString + inputString.charAt(i);
+        if (inputString.equals(reverseString))
+            return true;
+        else return false;
     }
 }
