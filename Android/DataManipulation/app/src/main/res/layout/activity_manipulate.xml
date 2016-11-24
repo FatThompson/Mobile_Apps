@@ -26,6 +26,24 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:id="@+id/sort_asc"
-      />
+        android:onClick="sortASC"/>
+
+    <Button
+        android:text="@string/btn_sort_shuffle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/sort_asc"
+        android:id="@+id/sort_shuffle"
+        android:onClick="sort_shuffle"/>
+
+    <Button
+        android:text="@string/btn_sort_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/sort_shuffle"
+        android:id="@+id/sort_desc"
+        android:onClick="sortDESC"/>
 
 </RelativeLayout>

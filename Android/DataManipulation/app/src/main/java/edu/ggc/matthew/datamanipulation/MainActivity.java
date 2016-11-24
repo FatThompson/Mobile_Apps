@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void openManipulate(View view) {
         Intent intentVar = new Intent(MainActivity.this, ManipulateActivity.class);
+
         startActivity(intentVar);
     }
 }
