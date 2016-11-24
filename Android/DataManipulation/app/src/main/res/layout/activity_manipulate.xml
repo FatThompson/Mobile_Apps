@@ -10,4 +10,22 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="edu.ggc.matthew.datamanipulation.ManipulateActivity">
 
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/sort_asc"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="20sp"
+        android:id="@+id/listViewYears" />
+
+    <Button
+        android:text="@string/btn_sort_asc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/sort_asc"
+      />
+
 </RelativeLayout>

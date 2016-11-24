@@ -1,5 +1,6 @@
 package edu.ggc.matthew.datamanipulation;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +10,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashSet;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "datamanipulation";
@@ -65,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * removes all the data
      */
-    public void clearData(){
+    private void clearData(){
         data.clear();
         saveData();
         displayData();
@@ -78,5 +81,42 @@ public class MainActivity extends AppCompatActivity {
     private void displayData(){
         ListView listView = (ListView) findViewById(R.id.listViewYears);
         listView.setAdapter(new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, data));
+    }
+
+    /**
+     * generates the random year.
+     * Has possiblity for recursive infinite loop.
+     */
+    public void generateData(){
+        int rndYear = 1;
+        int curYear = Calendar.getInstance().get(Calendar.YEAR);
+        //create and check date
+        while(!isLeapYear(rndYear)){
+            //based on the first date of the leap year eligibility
+            rndYear = new Random().nextInt(curYear - 1582) + 1582;
+        }
+        addData(rndYear + "");
+    }
+
+    /**
+     * the callable for the buttons
+     * @param view
+     */
+    public void generateData(View view) {
+        generateData();
+    }
+
+    /**
+     * checks the year
+     * @param year
+     * @return
+     */
+    private boolean isLeapYear(int year){
+        return ((year%4 == 0 && year % 100 !=0)||year%400==0);
+    }
+
+    public void openManipulate(View view) {
+        Intent intentVar = new Intent(MainActivity.this, ManipulateActivity.class);
+        startActivity(intentVar);
     }
 }
