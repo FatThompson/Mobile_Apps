@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">DataManipulation</string>
+    <string name="btn_generate">Generate</string>
+    <string name="btn_manipulate">Manipulate</string>
+    <string name="btn_clear">Clear</string>
+
+    <string name="btn_sort_asc">Ascending</string>
+    <string name="btn_sort_desc">Descending</string>
+    <string name="btn_sort_shuffle">Shuffle</string>
+</resources>
