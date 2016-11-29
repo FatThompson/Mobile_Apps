@@ -1,5 +1,6 @@
 package lutz.ggc.edu.ggctarsosdspandroid;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -28,76 +30,135 @@ public class TarsosDSPActivity extends AppCompatActivity {
     private final int PITCH_LIST_MIN_TO_DISPLAY = 7;
 	private final int MAX_PITCH_CHANGE = 3;
     private float changeInPitch;
+    private MediaPlayer mediaPlayer;
     Thread pitchThread;
+
+
+    private String TAG = "TarsosDSPActivity";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_tarsos_dsp);
 
+        createAudioRecognizer(savedInstanceState);
+        startMusic();
 
-		if (savedInstanceState == null) {
-			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
-		}
-		AudioDispatcher dispatcher = AudioDispatcherFactory.fromDefaultMicrophone(22050,1024,0);
 
-		dispatcher.addAudioProcessor(new PitchProcessor(PitchEstimationAlgorithm.FFT_YIN, 22050, 1024,
+	}
+
+
+    /***
+     * Music Start
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     */
+
+    /**
+     *
+     *
+     */
+    private void startMusic(){
+        Log.i(TAG,"startMusic");
+        mediaPlayer = MediaPlayer.create(this, R.raw.ggc_alma_mater);
+        mediaPlayer.start(); // no need to call prepare(); create() does that for you
+    }
+
+    private void stopMusic(){
+        Log.i(TAG,"stopMusic");
+        mediaPlayer.stop();
+    }
+
+    private void pauseMusic(){
+        Log.i(TAG,"pauseMusic");
+        if(mediaPlayer.isPlaying())
+            mediaPlayer.pause();
+        else
+            mediaPlayer.start();
+    }
+
+    private void resetMusic(){
+        Log.i(TAG,"resetMusic");
+        mediaPlayer.reset();
+        mediaPlayer.start();
+    }
+
+
+    /***
+     * Music buttons
+     *
+     *
+     *
+     *
+     */
+    public void startStopMusic(View view){
+        if(mediaPlayer.isPlaying()) stopMusic();
+        else startMusic();
+
+    }
+
+    public void pauseMusic(View view){
+        pauseMusic();
+    }
+
+    public void resetMusic(View view){
+        resetMusic();
+
+    }
+
+
+
+
+
+    /***
+     *
+     *
+     * Note recognizer
+     *
+     *
+     *
+     */
+
+
+    /**
+     * Seperated to make things a little easier
+     * @param savedInstanceState
+     */
+	protected void createAudioRecognizer(Bundle savedInstanceState){
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, new PlaceholderFragment()).commit();
+        }
+        AudioDispatcher dispatcher = AudioDispatcherFactory.fromDefaultMicrophone(22050,1024,0);
+
+        dispatcher.addAudioProcessor(new PitchProcessor(PitchEstimationAlgorithm.FFT_YIN, 22050, 1024,
                 new PitchDetectionHandler() {
 
-                @Override
-                public void handlePitch(PitchDetectionResult pitchDetectionResult,
-                    AudioEvent audioEvent) {
+                    @Override
+                    public void handlePitch(PitchDetectionResult pitchDetectionResult,
+                                            AudioEvent audioEvent) {
                         final float pitchInHz = pitchDetectionResult.getPitch();
                         runOnUiThread(new Runnable() {
-                             @Override
-                             public void run() {
-                                 displayPitch(pitchInHz);
+                            @Override
+                            public void run() {
+                                displayPitch(pitchInHz);
                             }
                         });
 
                     }
-		    }));
-		pitchThread = new Thread(dispatcher,"Audio Dispatcher");
-		pitchThread.start();
+                }));
+        pitchThread = new Thread(dispatcher,"Audio Dispatcher");
+        pitchThread.start();
+    }
 
-	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.tarsos_ds, menu);
-		return true;
-	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	public static class PlaceholderFragment extends Fragment {
-
-		public PlaceholderFragment() {
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_tarsos_ds,
-					container, false);
-			return rootView;
-		}
-	}
 
     /**
      * Updates pitchLog and displays the pitch
@@ -248,7 +309,7 @@ public class TarsosDSPActivity extends AppCompatActivity {
 		pitchInfo[1] = flat;
 		pitchInfo[2] = oct;
 
-		Log.i("Pitch Gathering",""+pitchInfo[0]+pitchInfo[1]+pitchInfo[2]);
+//		Log.i("Pitch Gathering",""+pitchInfo[0]+pitchInfo[1]+pitchInfo[2]);
         return pitchInfo;
 	}
 
@@ -282,7 +343,7 @@ public class TarsosDSPActivity extends AppCompatActivity {
         if(pitch < 15) if(pitchList.size() > 0)
 			pitchList.remove(0);
 
-        Log.i("PitchLIst","pitch: "+pitch);
+//        Log.i("PitchLIst","pitch: "+pitch);
         return pitch;
     }
 
@@ -306,6 +367,82 @@ public class TarsosDSPActivity extends AppCompatActivity {
         return temp;
     }
 
+
+    /***
+     *
+     *
+     *
+     * Baseline stuff
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     */
+
+    /**
+     *
+     * @param menu
+     * @return
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.tarsos_ds, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * A placeholder fragment containing a simple view.
+     */
+    public static class PlaceholderFragment extends Fragment {
+
+        public PlaceholderFragment() {
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_tarsos_ds,
+                    container, false);
+            return rootView;
+        }
+    }
+
+    /**
+     * This is based on the Android API
+     * @param view
+     */
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.radio_male:
+                if (checked)
+                    //do nothing
+                    break;
+            case R.id.radio_female:
+                if (checked)
+                    //do nothing
+                    break;
+        }
+    }
 
 
 }

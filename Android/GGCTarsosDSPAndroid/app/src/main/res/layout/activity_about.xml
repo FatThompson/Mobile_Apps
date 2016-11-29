@@ -10,8 +10,9 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="lutz.ggc.edu.ggctarsosdspandroid.AboutActivity">
+
     <TextView
-        android:text="Created By \nMatthew Thompson"
+        android:text="Created By \nMatthew Thompson\nArthur Wong"
         android:textSize="30sp"
         android:gravity="center"
         android:layout_width="wrap_content"
@@ -20,26 +21,6 @@
         android:layout_centerHorizontal="true"
         android:id="@+id/titletext" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/me"
-        android:layout_below="@id/titletext"
-        android:layout_above="@+id/description"
-        android:layout_marginBottom="23dp"
-        app:srcCompat="@drawable/about_photo" />
-
-    <TextView
-        android:text="ITEC 4550 \n Fall 2016"
-        android:textSize="30sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtClass"
-        android:layout_marginTop="30dp"
-        android:layout_below="@+id/titletext"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="12dp" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -47,4 +28,26 @@
         android:layout_alignParentBottom="true"
         android:text="@string/description"
         android:gravity="center"/>
+
+    <TextView
+        android:text="ITEC 4550 Fall 2016\nCreated 28 November 2016"
+        android:textSize="30sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:id="@+id/txtClass"
+        android:layout_below="@+id/titletext"
+        android:layout_marginTop="20sp"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ggc_logo"
+        android:layout_below="@+id/txtClass"
+        android:layout_above="@+id/description"
+        android:layout_marginBottom="20sp"
+        android:layout_marginTop="20sp"
+        android:layout_centerHorizontal="true"/>
+
 </RelativeLayout>
