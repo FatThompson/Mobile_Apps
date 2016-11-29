@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import be.tarsos.dsp.AudioDispatcher;
@@ -60,6 +61,47 @@ public class TarsosDSPActivity extends AppCompatActivity {
      *
      */
 
+    private void changeLyrics(int filePos) {
+        Object[][] lyrics_array = {
+            {01, ""},
+            {10, "We have gained wisdom and honor"},
+            {14, "From our home of green and grey"},
+            {18, "We will go forth and remember"},
+            {22, "All we've learned along the way"},
+            {26, "And with knowledge and compassion"},
+            {30, "We will build communities"},
+            {34, "Leading by example"},
+            {39, "And with dignity"},
+            {43, "Georgia Gwinnett"},
+            {47, "We'll ne'er forget"},
+            {51, "How we have grown"},
+            {54, "And those that we have met"},
+            {59, "Georgia Gwinnett"},
+            {63, "With love and respect"},
+            {68, "Our Alma Mater"},
+            {72, "Georgia Gwinnett"},
+            {75, "Our Alma Mater"},
+            {80, "Georgia Gwinnett"},
+            {86, ""}
+        };
+
+        //select the lyric
+        for (int i = 0; i < lyrics_array.length; i++) {
+
+            if (lyrics_array[i][0] == Math.floor(filePos)) {
+
+                //update screen
+//                $('#lyrics').html(lyrics_array[i][1]);
+                updateScreen(lyrics_array[i][1]);
+            } else {
+
+            }
+        }
+    }
+
+    private void updateScreen(Object lyrics_array){
+        Log.i(TAG,"the Lyric: "+lyrics_array.toString());
+    }
     /**
      *
      *
