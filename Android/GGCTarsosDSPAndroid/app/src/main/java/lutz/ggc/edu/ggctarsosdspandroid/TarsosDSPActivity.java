@@ -1,5 +1,6 @@
 package lutz.ggc.edu.ggctarsosdspandroid;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -9,8 +10,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import be.tarsos.dsp.AudioDispatcher;
@@ -28,76 +31,188 @@ public class TarsosDSPActivity extends AppCompatActivity {
     private final int PITCH_LIST_MIN_TO_DISPLAY = 7;
 	private final int MAX_PITCH_CHANGE = 3;
     private float changeInPitch;
+    private MediaPlayer mediaPlayer;
     Thread pitchThread;
+
+
+    private String TAG = "TarsosDSPActivity";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_tarsos_dsp);
 
+        createAudioRecognizer(savedInstanceState);
 
-		if (savedInstanceState == null) {
-			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
-		}
-		AudioDispatcher dispatcher = AudioDispatcherFactory.fromDefaultMicrophone(22050,1024,0);
+        mediaPlayer = MediaPlayer.create(this, R.raw.ggc_alma_mater);
+        startMusic();
 
-		dispatcher.addAudioProcessor(new PitchProcessor(PitchEstimationAlgorithm.FFT_YIN, 22050, 1024,
+
+	}
+
+
+    /***
+     * Music Start
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     */
+
+    private void changeLyrics(int filePos) {
+        filePos = (int) filePos / 1000;
+        Object[][] lyrics_array = {
+            {01, ""},
+            {10, "We have gained wisdom and honor"},
+            {14, "From our home of green and grey"},
+            {18, "We will go forth and remember"},
+            {22, "All we've learned along the way"},
+            {26, "And with knowledge and compassion"},
+            {30, "We will build communities"},
+            {34, "Leading by example"},
+            {39, "And with dignity"},
+            {43, "Georgia Gwinnett"},
+            {47, "We'll ne'er forget"},
+            {51, "How we have grown"},
+            {54, "And those that we have met"},
+            {59, "Georgia Gwinnett"},
+            {63, "With love and respect"},
+            {68, "Our Alma Mater"},
+            {72, "Georgia Gwinnett"},
+            {75, "Our Alma Mater"},
+            {80, "Georgia Gwinnett"},
+            {86, ""}
+        };
+
+        //select the lyric
+        for (int i = 0; i < lyrics_array.length; i++) {
+
+            if ((int) lyrics_array[i][0] == Math.floor(filePos)) {
+
+                //update screen
+//                $('#lyrics').html(lyrics_array[i][1]);
+                updateScreen(lyrics_array[i][1]);
+            } else {
+
+            }
+        }
+    }
+
+    private void updateScreen(Object lyrics_array){
+        Log.i(TAG,"the Lyric: "+lyrics_array.toString());
+
+        TextView lyrics = (TextView) findViewById(R.id.lyrics);
+        lyrics.setText("Lyrics: " + lyrics_array.toString());
+    }
+    /**
+     *
+     *
+     */
+    private void startMusic(){
+        Log.i(TAG,"startMusic");
+        try {
+            mediaPlayer.start();
+        }catch (Exception e){
+
+        }
+        changeLyrics(01);
+    }
+
+    private void stopMusic(){
+        Log.i(TAG,"stopMusic");
+        try {
+            mediaPlayer.reset();
+            mediaPlayer = MediaPlayer.create(this, R.raw.ggc_alma_mater);
+        }catch (Exception e){}
+
+        changeLyrics(01);
+
+    }
+
+    private void pauseMusic(){
+        Log.i(TAG,"pauseMusic");
+        if(mediaPlayer.isPlaying())
+            mediaPlayer.pause();
+        else
+            mediaPlayer.start();
+    }
+
+    private void resetMusic(){
+        Log.i(TAG,"resetMusic");
+        stopMusic();
+        startMusic();
+    }
+
+
+    /***
+     * Music buttons
+     *
+     *
+     *
+     *
+     */
+    public void startStopMusic(View view){
+        if(mediaPlayer.isPlaying() || mediaPlayer.isLooping()) stopMusic();
+        else startMusic();
+
+    }
+    public void startMusic(View view){startMusic();}
+    public void stopMusic(View view){stopMusic();}
+    public void pauseMusic(View view){pauseMusic();}
+
+    public void resetMusic(View view){resetMusic();}
+
+
+
+
+
+    /***
+     *
+     *
+     * Note recognizer
+     *
+     *
+     *
+     */
+
+
+    /**
+     * Seperated to make things a little easier
+     * @param savedInstanceState
+     */
+	protected void createAudioRecognizer(Bundle savedInstanceState){
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, new PlaceholderFragment()).commit();
+        }
+        AudioDispatcher dispatcher = AudioDispatcherFactory.fromDefaultMicrophone(22050,1024,0);
+
+        dispatcher.addAudioProcessor(new PitchProcessor(PitchEstimationAlgorithm.FFT_YIN, 22050, 1024,
                 new PitchDetectionHandler() {
 
-                @Override
-                public void handlePitch(PitchDetectionResult pitchDetectionResult,
-                    AudioEvent audioEvent) {
+                    @Override
+                    public void handlePitch(PitchDetectionResult pitchDetectionResult,
+                                            AudioEvent audioEvent) {
                         final float pitchInHz = pitchDetectionResult.getPitch();
                         runOnUiThread(new Runnable() {
-                             @Override
-                             public void run() {
-                                 displayPitch(pitchInHz);
+                            @Override
+                            public void run() {
+                                displayPitch(pitchInHz);
                             }
                         });
 
                     }
-		    }));
-		pitchThread = new Thread(dispatcher,"Audio Dispatcher");
-		pitchThread.start();
+                }));
+        pitchThread = new Thread(dispatcher,"Audio Dispatcher");
+        pitchThread.start();
+    }
 
-	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.tarsos_ds, menu);
-		return true;
-	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	public static class PlaceholderFragment extends Fragment {
-
-		public PlaceholderFragment() {
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_tarsos_ds,
-					container, false);
-			return rootView;
-		}
-	}
 
     /**
      * Updates pitchLog and displays the pitch
@@ -105,6 +220,7 @@ public class TarsosDSPActivity extends AppCompatActivity {
      */
 	public void displayPitch(float pitch){
 
+        changeLyrics(mediaPlayer.getCurrentPosition());
 		pitch = lowPassFilter(pitch);
 
 		String pitchInfo[] = new String[3];
@@ -120,6 +236,7 @@ public class TarsosDSPActivity extends AppCompatActivity {
 		txvNote.setText(pitchInfo[0]+"");
 		txvFlat.setText(pitchInfo[1] + "");
 		txvOct.setText(pitchInfo[2] + "");
+
     }
 
     /**
@@ -248,7 +365,7 @@ public class TarsosDSPActivity extends AppCompatActivity {
 		pitchInfo[1] = flat;
 		pitchInfo[2] = oct;
 
-		Log.i("Pitch Gathering",""+pitchInfo[0]+pitchInfo[1]+pitchInfo[2]);
+//		Log.i("Pitch Gathering",""+pitchInfo[0]+pitchInfo[1]+pitchInfo[2]);
         return pitchInfo;
 	}
 
@@ -282,7 +399,7 @@ public class TarsosDSPActivity extends AppCompatActivity {
         if(pitch < 15) if(pitchList.size() > 0)
 			pitchList.remove(0);
 
-        Log.i("PitchLIst","pitch: "+pitch);
+//        Log.i("PitchLIst","pitch: "+pitch);
         return pitch;
     }
 
@@ -306,6 +423,82 @@ public class TarsosDSPActivity extends AppCompatActivity {
         return temp;
     }
 
+
+    /***
+     *
+     *
+     *
+     * Baseline stuff
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     */
+
+    /**
+     *
+     * @param menu
+     * @return
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.tarsos_ds, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * A placeholder fragment containing a simple view.
+     */
+    public static class PlaceholderFragment extends Fragment {
+
+        public PlaceholderFragment() {
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_tarsos_ds,
+                    container, false);
+            return rootView;
+        }
+    }
+
+    /**
+     * This is based on the Android API
+     * @param view
+     */
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.radio_male:
+                if (checked)
+                    //do nothing
+                    break;
+            case R.id.radio_female:
+                if (checked)
+                    //do nothing
+                    break;
+        }
+    }
 
 
 }

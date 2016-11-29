@@ -9,18 +9,6 @@
     tools:context="be.tarsos.tarsos.dsp.android.ui.TarsosDSPActivity$PlaceholderFragment" >
 
     <TextView
-        android:id="@+id/txvNote"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="60sp"
-        android:layout_marginLeft="-60dp"
-        android:layout_width="60sp"
-        android:layout_height="wrap_content"
-        android:text="__"
-        android:gravity="right"
-        android:textSize="60sp" />
-
-    <TextView
         android:text=""
         android:layout_width="20sp"
         android:layout_height="wrap_content"
@@ -37,6 +25,76 @@
         android:layout_toEndOf="@+id/txvFlat"
         android:layout_alignBottom="@+id/txvNote"
         android:layout_marginStart="0dp" />
+
+    <TextView
+        android:id="@+id/txvNote"
+        android:layout_width="60sp"
+        android:layout_height="wrap_content"
+        android:text="__"
+        android:gravity="right"
+        android:textSize="60sp"
+        android:layout_marginBottom="154dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <RadioGroup
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="20dp"
+        android:layout_above="@+id/txvFlat"
+        android:layout_alignParentStart="true">
+
+        <RadioButton android:id="@+id/radio_male"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Male"
+            android:onClick="onRadioButtonClicked"/>
+
+        <RadioButton android:id="@+id/radio_female"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Female"
+            android:onClick="onRadioButtonClicked"/>
+
+    </RadioGroup>
+
+    <Button
+        android:text="@string/btnStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txvOct"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="44dp"
+        android:id="@+id/btn_stop"
+        android:onClick="startMusic"/>
+
+    <Button
+        android:text="@string/btnPause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/btn_stop"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/btn_pause"
+        android:onClick="pauseMusic"/>
+
+    <Button
+        android:text="@string/btnStop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/btn_pause"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/btn_reset"
+        android:onClick="stopMusic"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/btn_stop"
+        android:layout_marginTop="22dp"
+        android:id="@+id/lyrics" />
 
 
 </RelativeLayout>
