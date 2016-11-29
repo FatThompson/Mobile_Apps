@@ -60,7 +60,7 @@
     </RadioGroup>
 
     <Button
-        android:text="@string/btnStartStop"
+        android:text="@string/btnStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txvOct"
@@ -68,7 +68,7 @@
         android:layout_marginStart="13dp"
         android:layout_marginTop="44dp"
         android:id="@+id/btn_stop"
-        android:onClick="startStopMusic"/>
+        android:onClick="startMusic"/>
 
     <Button
         android:text="@string/btnPause"
@@ -80,13 +80,21 @@
         android:onClick="pauseMusic"/>
 
     <Button
-        android:text="@string/btnReset"
+        android:text="@string/btnStop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/btn_pause"
         android:layout_alignParentEnd="true"
         android:id="@+id/btn_reset"
-        android:onClick="resetMusic"/>
+        android:onClick="stopMusic"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/btn_stop"
+        android:layout_marginTop="22dp"
+        android:id="@+id/lyrics" />
 
 
 </RelativeLayout>

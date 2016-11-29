@@ -43,6 +43,8 @@ public class TarsosDSPActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_tarsos_dsp);
 
         createAudioRecognizer(savedInstanceState);
+
+        mediaPlayer = MediaPlayer.create(this, R.raw.ggc_alma_mater);
         startMusic();
 
 
@@ -62,6 +64,7 @@ public class TarsosDSPActivity extends AppCompatActivity {
      */
 
     private void changeLyrics(int filePos) {
+        filePos = (int) filePos / 1000;
         Object[][] lyrics_array = {
             {01, ""},
             {10, "We have gained wisdom and honor"},
@@ -88,7 +91,7 @@ public class TarsosDSPActivity extends AppCompatActivity {
         //select the lyric
         for (int i = 0; i < lyrics_array.length; i++) {
 
-            if (lyrics_array[i][0] == Math.floor(filePos)) {
+            if ((int) lyrics_array[i][0] == Math.floor(filePos)) {
 
                 //update screen
 //                $('#lyrics').html(lyrics_array[i][1]);
@@ -101,6 +104,9 @@ public class TarsosDSPActivity extends AppCompatActivity {
 
     private void updateScreen(Object lyrics_array){
         Log.i(TAG,"the Lyric: "+lyrics_array.toString());
+
+        TextView lyrics = (TextView) findViewById(R.id.lyrics);
+        lyrics.setText("Lyrics: " + lyrics_array.toString());
     }
     /**
      *
@@ -108,13 +114,23 @@ public class TarsosDSPActivity extends AppCompatActivity {
      */
     private void startMusic(){
         Log.i(TAG,"startMusic");
-        mediaPlayer = MediaPlayer.create(this, R.raw.ggc_alma_mater);
-        mediaPlayer.start(); // no need to call prepare(); create() does that for you
+        try {
+            mediaPlayer.start();
+        }catch (Exception e){
+
+        }
+        changeLyrics(01);
     }
 
     private void stopMusic(){
         Log.i(TAG,"stopMusic");
-        mediaPlayer.stop();
+        try {
+            mediaPlayer.reset();
+            mediaPlayer = MediaPlayer.create(this, R.raw.ggc_alma_mater);
+        }catch (Exception e){}
+
+        changeLyrics(01);
+
     }
 
     private void pauseMusic(){
@@ -127,8 +143,8 @@ public class TarsosDSPActivity extends AppCompatActivity {
 
     private void resetMusic(){
         Log.i(TAG,"resetMusic");
-        mediaPlayer.reset();
-        mediaPlayer.start();
+        stopMusic();
+        startMusic();
     }
 
 
@@ -140,19 +156,15 @@ public class TarsosDSPActivity extends AppCompatActivity {
      *
      */
     public void startStopMusic(View view){
-        if(mediaPlayer.isPlaying()) stopMusic();
+        if(mediaPlayer.isPlaying() || mediaPlayer.isLooping()) stopMusic();
         else startMusic();
 
     }
+    public void startMusic(View view){startMusic();}
+    public void stopMusic(View view){stopMusic();}
+    public void pauseMusic(View view){pauseMusic();}
 
-    public void pauseMusic(View view){
-        pauseMusic();
-    }
-
-    public void resetMusic(View view){
-        resetMusic();
-
-    }
+    public void resetMusic(View view){resetMusic();}
 
 
 
@@ -208,6 +220,7 @@ public class TarsosDSPActivity extends AppCompatActivity {
      */
 	public void displayPitch(float pitch){
 
+        changeLyrics(mediaPlayer.getCurrentPosition());
 		pitch = lowPassFilter(pitch);
 
 		String pitchInfo[] = new String[3];
@@ -223,6 +236,7 @@ public class TarsosDSPActivity extends AppCompatActivity {
 		txvNote.setText(pitchInfo[0]+"");
 		txvFlat.setText(pitchInfo[1] + "");
 		txvOct.setText(pitchInfo[2] + "");
+
     }
 
     /**
