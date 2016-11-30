@@ -119,7 +119,6 @@ public class TarsosDSPActivity extends AppCompatActivity {
         }catch (Exception e){
 
         }
-        changeLyrics(01);
     }
 
     private void stopMusic(){
@@ -129,7 +128,8 @@ public class TarsosDSPActivity extends AppCompatActivity {
             mediaPlayer = MediaPlayer.create(this, R.raw.ggc_alma_mater);
         }catch (Exception e){}
 
-        changeLyrics(01);
+        TextView lyrics = (TextView) findViewById(R.id.lyrics);
+        lyrics.setText("Lyrics: ");
 
     }
 
